@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+</head>
+<body>
+  <nav class="navbar" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+      <a class="navbar-brand"></a>
+    </div>
+  </nav>
+  <section class="jumbotron text-center .mt-0">
+    <div class="container">
+      <h1 class="jumbotron-heading">Vehicle Speed Detection</h1>
+      <p class="lead text-muted">This app calculates the speed of moving vehicles using OpenCV and dlib.<br>
+        OpenCV is a library of programming functions mainly aimed at real-time computer vision.<br>
+        dlib is a toolkit for making real world machine learning and data analysis applications in C++.<br> While the library is originally written in C++, it has good, easy to use Python bindings<br><br><br>
+      </p>
+    </div>
+    
+  
+  {% for message in messages %}
+  <div class="alert alert-{{message.tags}} alert dismissable fade show" role="alert">
+  <strong>Message:</strong>{{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">  
+  <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  {% endfor %}
+
+  {% if user.is_authenticated %}
+  <h3>Hello {{fname}} </h3>
+  <h4>You are successfully logged in</h4>
+<div>
+<form enctype="multipart/form-data" method="POST" action="">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="file" value="Upload"/>
+</form>
+<br><br>
+<video width='400' controls>
+<source src='{{ MEDIA_URL }}{{ videofile }}' type='video/mp4'>
+Your browser does not support the video tag.
+</video>
+<br><br>
+</p>
+  <form action="" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    {{form.as_t}}
+    <button type="submit" class="">Upload</button>
+  </form>
+</div>
+
+<hr>
+{% for x in all %}
+<h3 class="text-center mt-2 mb-2">{{x.caption}}</h3>
+<video class="embed-responsive embed-responsive-16by9" controls="controls" >
+<source src="{{x.video.url}}" type="video/mp4" />
+</video>
+{% endfor %}
+  <p>
+    <a href="/signout" class="btn btn-primary my-2">SignOut</a>
+  </p>
+  <!--<button type="submit"><a href="/signout"> SignOut </a></button>-->
+
+  {% else %}
+  <p>
+    <h5>Sign In to continue</h5>
+    <a href="/signin" class="btn btn-primary my-2">Sign In</a><br><br>
+    <h6>OR</h6><br>
+    <h5>Sign Up to create a new account</h5>
+    <a href="/signup" class="btn btn-primary my-2">SignUp</a>
+  </div>
+  </p>
+  <!--<button type="submit"> <a href="/signup"> SignUp </a></button>
+  <button type="submit"><a href="/signin"> signIn </a></button>-->
+  {% endif %}
+</section>
+</body>
+</html>
